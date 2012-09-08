@@ -1,0 +1,9 @@
+class SitesController < ApplicationController
+  def list
+  end
+
+  def visit
+    @hit = Sites.new(params[:id])
+    logger.debug "New post: #{@hit.id}"
+  end
+end
