@@ -19,3 +19,8 @@ in this directory.
 
 Additional deliverables, such as the problem-analysis and the design-analysis, should
 be saved as PDF files in the directory called "deliverables"
+
+<p1.1>
+Here's the location right now:
+http://fast-forest-5811.herokuapp.com/sites
+</p1.1>
