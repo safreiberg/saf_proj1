@@ -1,0 +1,13 @@
+Object Model:
+
+We need to be able to track the hits to each individual page within a site. The object model therefore looks like this:
+
+   ----------------
+   |     Site     |
+   ----------------
+   /       |       \ 
+------   ------   ------
+|Page|	 |Page|   |Page|
+------   ------   ------
+
+Each Site has many Page objects that belong to it. This relationship goes as such: a Site has many Pages, and a Page belongs to one Site. This model allows us to record the hits to each individual page

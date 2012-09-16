@@ -1,10 +1,12 @@
 SafProj1::Application.routes.draw do
-#  get "sites/list"
+  match "/sites/:id/visit" => "sites#visit"
+  match "/sites" => "sites#list"
+  root :to => "welcome#index"
 
-  match "sites/:id/visit" => "sites#visit"
-  match "sites" => "sites#list"
-#  resources :sites
+  match "/restricted/resource" => "sites#resource_preflight", :constraints => { :method => "OPTIONS" }
+  match "/restricted/resource" => "sites#resource"
 
+  match "*path" => "welcome#sorry"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
