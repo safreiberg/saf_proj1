@@ -22,7 +22,7 @@ class SitesController < ApplicationController
 
     if params[:page_id]
       logger.debug "increasing hit for page"
-      @page_id = params[:page_id]
+      @page_id = @name.to_s + params[:page_id].to_s
       @page = Page.where(:id => @page_id).first_or_create({ :site_id => @name, :hits => 0, :total_duration => 0, :id => @page_id })
 
       @page.increaseHitCount
