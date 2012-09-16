@@ -3,6 +3,7 @@ class SitesController < ApplicationController
   #after_filter :set_cors_headers
 
   def list
+
   end
 
   def list_site
