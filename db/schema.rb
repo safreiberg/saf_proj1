@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120908183232) do
+ActiveRecord::Schema.define(:version => 20120916190841) do
+
+  create_table "pages", :force => true do |t|
+    t.integer  "site_id"
+    t.integer  "hits"
+    t.integer  "total_duration"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "sites", :force => true do |t|
     t.string   "name"
     t.integer  "hits"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "total_duration"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
 end
