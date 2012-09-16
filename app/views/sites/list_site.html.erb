@@ -21,7 +21,7 @@
   <%  pages = Page.where(:site_id => params[:id])
     pages.each do |page| %>
     <tr>
-      <td><%= page.id %></td>
+      <td><%= page.name %></td>
       <td><%= page.hits %></td>
     </tr>
   <% end %>
