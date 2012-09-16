@@ -1,0 +1,37 @@
+<html>
+  <head>
+    
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      function ping() {
+      var xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 1) {
+          console.log("The call to open(...) succeeded.");
+        }
+        if (xhr.readyState == 2) {
+          console.log("The call to send(...) succeeded. Waiting for response...");
+        }
+        if (xhr.readyState == 3) {
+          console.log("The response is coming in!!");
+        }
+        if (xhr.readyState == 4) {
+          console.log("The call to open(...) succeeded.We now have the complete response: " + xhr.response);
+        }
+      }
+
+      xhr.open("GET", "localhost/sites/123/3/", true);
+      xhr.send("");
+      }
+      function ping_simple() {
+      alert("lol");
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "localhost:3000/sites/123/3/", true);
+      xhr.send("");
+      }
+    </script>      
+  </body>
+</html>
