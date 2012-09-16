@@ -1,9 +1,5 @@
 class SitesController < ApplicationController
-  #before_filter :cors_preflight_check
-  #after_filter :set_cors_headers
-
   def list
-
   end
 
   def list_site
@@ -33,16 +29,6 @@ class SitesController < ApplicationController
     headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
     headers["Access-Control-Allow-Headers"] = "Content-Type, Origin, Referer, User-Agent"
     headers["Access-Control-Max-Age"] = "3600"
-  end
-
-  def cors_preflight_check
-    if request.method == :options
-      headers["Access-Control-Allow-Origin"] = "*"
-      headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
-      headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-Prototype-Version"
-      headers["Access-Control-Max-Age"] = "3600"
-      render :text => '', :content_type => "text/plain"
-    end
   end
 
   def resource_preflight
