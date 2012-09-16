@@ -13,4 +13,9 @@ class Page < ActiveRecord::Base
     self.hits = self.hits + 1
     self.save
   end
+
+  def increaseTotalDuration(dur)
+    self.total_duration = self.total_duration + dur
+    self.save
+  end
 end

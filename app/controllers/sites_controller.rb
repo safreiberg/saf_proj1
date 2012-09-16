@@ -14,13 +14,18 @@ class SitesController < ApplicationController
     @name = params[:id]
     @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0 })
     @site.increaseHitCount
+    @site.increaseTotalDuration
     logger.debug "increasing hit for site"
 
-    if params[:page_id]
+    if params[:page_id] && params[:duration]
       logger.debug "increasing hit for page"
+
+      @duration = params[:duration]
+      logger.debug "got duration: " + @duration.to_s
       @page_id = "Site: " + @name.to_s + ", Page: " + params[:page_id].to_s
       @page = Page.where(:name => @page_id).first_or_create({ :site_id => @name, :hits => 0, :total_duration => 0, :name => @page_id })
       @page.increaseHitCount
+      @page.increaseTotalDuration(@duration)
     end
   end
 

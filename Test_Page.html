@@ -5,7 +5,17 @@
 
   <body>
     <script type="text/javascript">
-      function ping() {
+      var time_start;
+
+      window.onload = function() {
+      time_start = new Date().getTime();
+      }
+
+      window.onunload = function() {
+      ping(new Date().getTime() - time_start);
+      }
+
+      function ping(difference) {
       var xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = function() {
@@ -22,14 +32,10 @@
           console.log("The call to open(...) succeeded.We now have the complete response: " + xhr.response);
         }
       }
+      
+      var url = window.location.pathname;
 
-      xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/1/11", true);
-      xhr.send("");
-      }
-      function ping_simple() {
-      alert("lol");
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "localhost:3000/sites/123/3/", true);
+      xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+url+"/"+difference/1000, true);
       xhr.send("");
       }
     </script>      

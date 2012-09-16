@@ -6,16 +6,19 @@
   <tr>
     <th>Total</th>
     <th>Hits</th>
+    <th>Duration</th>
   </tr>
 
   <tr>
   <% site = Site.find_by_name(params[:id]) %>
     <td><%= site.name %></td>
     <td><%= site.hits %></td>
+    <td><%= site.total_duration %></td>
   </tr>
   <tr>
     <th>Page</th>
     <th>Hits</th>
+    <th>Duration</th>
   </tr>
 
   <%  pages = Page.where(:site_id => params[:id])
@@ -23,6 +26,7 @@
     <tr>
       <td><%= page.name %></td>
       <td><%= page.hits %></td>
+      <td><%= page.total_duration %></td>
     </tr>
   <% end %>
 </table>
