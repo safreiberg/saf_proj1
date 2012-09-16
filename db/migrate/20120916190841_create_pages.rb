@@ -4,7 +4,7 @@ class CreatePages < ActiveRecord::Migration
       t.integer :site_id
       t.integer :hits
       t.integer :total_duration
-      t.string :id
+      t.string :name
 
       t.timestamps
     end

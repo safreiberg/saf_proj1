@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20120916190841) do
     t.integer  "site_id"
     t.integer  "hits"
     t.integer  "total_duration"
+    t.string   "name"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
