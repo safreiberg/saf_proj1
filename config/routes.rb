@@ -1,5 +1,5 @@
 SafProj1::Application.routes.draw do
-
+  ## Takes care of the OPTIONS preflight stuff for the cross-site requests.
   match "/*path" => "sites#resource_preflight", :constraints => { :method => "OPTIONS" }
 
   ## This line takes care of the hits registered by the JS at the client browser.

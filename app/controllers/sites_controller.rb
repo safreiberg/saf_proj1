@@ -2,6 +2,7 @@ class SitesController < ApplicationController
   def list
   end
 
+  ## Makes sure that a Site is in the database before trying to display the analytics statistics for it.
   def list_site
     @name = params[:id]
     @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0 })
@@ -29,6 +30,7 @@ class SitesController < ApplicationController
     end
   end
 
+  ## These are necessary for the Cross-Site requests.
   def set_cors_headers
     headers["Access-Control-Allow-Origin"] = "*"
     headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
@@ -45,4 +47,5 @@ class SitesController < ApplicationController
     set_cors_headers
     render :text => "OK here is your restricted resource!"
   end
+  ## End Cross-Site request snippets.
 end
