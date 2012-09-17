@@ -3,7 +3,7 @@ SafProj1::Application.routes.draw do
   match "/*path" => "sites#resource_preflight", :constraints => { :method => "OPTIONS" }
 
   ## This line takes care of the hits registered by the JS at the client browser.
-  match "/sites/:id/:page_id/:duration" => "sites#visit", :constrains => {:page_id => /.*/}
+  match "/sites/:id/:page_id/:duration" => "sites#visit", :constraints => {:page_id => /.*/}
 
   ## This line takes care of requests to see analytics for a site
   match "/sites/:id/" => "sites#list_site"
