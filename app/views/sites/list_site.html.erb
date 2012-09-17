@@ -16,7 +16,7 @@
     <td><%= site.hits %></td>
     <td><%= site.total_duration %></td>
     <td><%=
-        if site.total_duration == 0
+        if site.hits == 0
           site.total_duration.to_i
         else
           site.total_duration.to_i / site.hits.to_i
@@ -37,7 +37,7 @@
       <td><%= page.hits %></td>
       <td><%= page.total_duration %></td>
       <td><%=
-        if page.total_duration == 0
+        if page.hits == 0
           page.total_duration.to_i
         else
           page.total_duration.to_i / page.hits.to_i
