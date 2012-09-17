@@ -15,7 +15,7 @@
       <td><%= site.name %></td>
       <td><%= site.hits %></td>
       <td><%= site.total_duration %></td>
-      <td><%= site.total_duration / site.hits %></td>
+      <td><%= site.total_duration.to_i / site.hits.to_i %></td>
     </tr>
   <% end %>
 </table>
