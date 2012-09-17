@@ -6,7 +6,7 @@
   <body>
     <script type="text/javascript">
       var time_start;
-
+      var my_id = 12;
       window.onload = function() {
       time_start = new Date().getTime();
       }
@@ -35,7 +35,7 @@
       
       var url = window.location.pathname;
 
-      xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+url+"/"+difference/1000, true);
+      xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+my_id+"/"+url+"/"+difference/1000, false);
       xhr.send("");
       }
     </script>      
