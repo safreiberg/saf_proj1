@@ -7,6 +7,7 @@
     <th>Total</th>
     <th>Hits</th>
     <th>Duration</th>
+    <th>Avg visit length</th>
   </tr>
 
   <tr>
@@ -14,11 +15,13 @@
     <td><%= site.name %></td>
     <td><%= site.hits %></td>
     <td><%= site.total_duration %></td>
+    <td><%= site.total_duration / site.hits %></td>
   </tr>
   <tr>
     <th>Page</th>
     <th>Hits</th>
     <th>Duration</th>
+    <th>Avg visit length</th>
   </tr>
 
   <%  pages = Page.where(:site_id => params[:id])
@@ -27,6 +30,7 @@
       <td><%= page.name %></td>
       <td><%= page.hits %></td>
       <td><%= page.total_duration %></td>
+      <td><%= page.total_duration / page.hits %></td>
     </tr>
   <% end %>
 </table>

@@ -6,6 +6,7 @@
     <th>Name</th>
     <th>Hit Count</th>
     <th>Duration</th>
+    <th>Avg visit length</th>
   </tr>
 
   <%  sites = Site.find(:all)
@@ -14,6 +15,7 @@
       <td><%= site.name %></td>
       <td><%= site.hits %></td>
       <td><%= site.total_duration %></td>
+      <td><%= site.total_duration / site.hits %></td>
     </tr>
   <% end %>
 </table>
