@@ -1,11 +1,35 @@
 class SitesController < ApplicationController
+  before_filter :checkAuth, :only => [:createSite, :list_site, :list]
+
+  def checkAuth
+    if !session[:current_user]
+      render :text => "You're not signed in! Go <a href='/signin'>here</a>."
+    end
+  end
+
+  # This should be used to claim a site as yours. If the site is already claimed (not by admin) the request will be rejected.
+  def createSite
+    @name = params[:id]
+    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0, :isopen => 0, :ownedby => "admin" })
+
+    if @site.ownedby != "admin"
+      render :text => "This site is already claimed."
+    else
+      @site.ownedby = session[:current_user]
+      @site.save
+    end
+  end
+
   def list
+  end
+
+  def sorry
   end
 
   ## Makes sure that a Site is in the database before trying to display the analytics statistics for it.
   def list_site
     @name = params[:id]
-    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0 })
+    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0, :isopen => 0, :ownedby => "admin" })
   end
 
   ## Note that we create the record for a site if the site has never been visited.
@@ -13,7 +37,7 @@ class SitesController < ApplicationController
     resource
 
     @name = params[:id]
-    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0 })
+    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0, :isopen => 0, :ownedby => "admin"})
     @site.increaseHitCount
     logger.debug "increasing hit for site"
 

@@ -1,6 +1,8 @@
 <h1>Sites#list_site</h1>
 <p>Find me in app/views/sites/list_site.html.erb</p>
 <h2>Site, Pages: Hits</h2>
+  <p>You are viewing this site if you are the owner or it is publicly listed.</p>
+ <p>Hi, <%= session[:current_user] %>. Your sites are below:</p> <br />
 <table>
 
   <tr>
@@ -11,7 +13,13 @@
   </tr>
 
   <tr>
-  <% site = Site.find_by_name(params[:id]) %>
+  <%
+  site = Site.find_by_name(params[:id])
+  if site.nil? or (site.isopen == 0 and site.ownedby != session[:current_user])
+    render :text => "Sorry champ, looks like you don't have privileges for this page."
+    raise "Sorry bro, you don't have permission for this site."
+  end
+  %>
     <td><%= site.name %></td>
     <td><%= site.hits %></td>
     <td><%= site.total_duration %></td>

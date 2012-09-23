@@ -1,0 +1,1 @@
+<h1>You have claimed <%= params[:id] %> site as yours, <%= session[:current_user]%>. </h1>

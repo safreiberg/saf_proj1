@@ -1,6 +1,11 @@
 <h1>Sites#list</h1>
 <p>Find me in app/views/sites/list.html.erb</p>
 <h2>Sites and Hits</h2>
+  <p>Note that you are only viewing the sites that you are permitted to view, including ones that you own and ones that are public.</p>
+<p> You are currently signed in as <%= session[:current_user] %>. You may <a href="/signout">signout here</a>.</p>
+
+<br />
+
 <table>
   <tr>
     <th>Name</th>
@@ -10,7 +15,11 @@
   </tr>
 
   <%  sites = Site.find(:all)
-    sites.each do |site| %>
+    sites.each do |site|
+    if site.ownedby != session[:current_user] and site.isopen == 0
+      next
+    end
+ %>
     <tr>
       <td><%= site.name %></td>
       <td><%= site.hits %></td>

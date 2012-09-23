@@ -4,6 +4,8 @@ class CreateSites < ActiveRecord::Migration
       t.string :name
       t.integer :hits
       t.integer :total_duration
+      t.string :ownedby
+      t.integer :isopen
 
       t.timestamps
     end

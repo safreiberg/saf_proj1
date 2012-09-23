@@ -1,4 +1,8 @@
 SafProj1::Application.routes.draw do
+
+  resources :users
+  resources :sessions
+
   ## Takes care of the OPTIONS preflight stuff for the cross-site requests.
   match "/*path" => "sites#resource_preflight", :constraints => { :method => "OPTIONS" }
 
@@ -11,7 +15,12 @@ SafProj1::Application.routes.draw do
   ## This line takes care of requests to see analytics for the entire engine
   match "/sites" => "sites#list"
 
-  root :to => "welcome#index"
+  match "/signup" => "users#new"
+  match "/signin" => "sessions#create"
+  match "/signout" => "sessions#destroy"
+  match "/claimSite/:id" => "sites#createSite"
+
+  root :to => "sites#list"
 
   ## Catches all of the remaining requests and sends them to a 404 page.
   match "*path" => "welcome#sorry"

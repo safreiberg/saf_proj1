@@ -1,0 +1,14 @@
+<h1>Log in, or <a href="../../../signup">signup</a></h1>
+<%= form_tag sessions_path do %>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %>
+    <%= text_field_tag :password, params[:password] %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "log in" %>
+  </div>
+<% end %>
