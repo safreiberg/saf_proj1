@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
   before_filter :checkAuth, :only => [:createSite, :list_site, :list, :viewSiteSpecifics]
-  after_filter :checkPermission, :only => [:list_site, :viewSiteSpecifics]
+  after_filter :checkPermission, :only => [:list_site, :viewSiteSpecifics, :list]
 
   def checkAuth
     if !session[:current_user]

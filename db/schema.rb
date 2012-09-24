@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20120924002741) do
 
   create_table "pageviews", :force => true do |t|
     t.string   "location"
-    t.time     "hittime"
+    t.integer  "hittime"
     t.integer  "site_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
