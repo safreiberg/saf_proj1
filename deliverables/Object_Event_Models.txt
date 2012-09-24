@@ -31,6 +31,11 @@ Domain:
 
 Object Model:
 
+--------------------
+A revised object model has been placed in a PDF in this directory.
+--------------------
+
+
 We need to be able to track the hits to each individual page within a site. The object model therefore looks like this:
 
     ----------------
