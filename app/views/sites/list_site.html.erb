@@ -11,6 +11,8 @@
     <th>Hits</th>
     <th>Duration</th>
     <th>Avg visit length</th>
+    <th>Page views this hour (aggregate)</th>
+    <th>Average views per hour</th>
   </tr>
 
   <tr>
@@ -27,12 +29,16 @@
           site.total_duration.to_i / site.hits.to_i
         end
 %></td>
+    <td><%= Pageview.where(:site_id => params[:id], :hittime => Time.new.hour)%>
+    <td><%= site.hits.to_i / (Time.new.now - site.created_at)%>
   </tr>
   <tr>
     <th>Page</th>
     <th>Hits</th>
     <th>Duration</th>
     <th>Avg visit length</th>
+    <th></th>
+    <th></th>
   </tr>
 
   <%  pages = Page.where(:site_id => params[:id])
@@ -48,6 +54,8 @@
           page.total_duration.to_i / page.hits.to_i
         end
           %></td>
+      <td></td>
+     <td></td>
     </tr>
   <% end %>
 </table>
