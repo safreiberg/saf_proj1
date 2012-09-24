@@ -10,8 +10,7 @@ class SitesController < ApplicationController
 
   def checkPermission
     if @site.nil? or (@site.isopen == 0 and @site.ownedby != session[:current_user])
-#      render :text => "Sorry bro, you don't have permission for this site."
-#      redirect_to :action => sorry
+      render :text => "Sorry bro, you don't have permission for this site."
     end
   end
 
