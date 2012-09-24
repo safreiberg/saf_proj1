@@ -30,7 +30,7 @@
         end
 %></td>
     <td><%= Pageview.where(:site_id => params[:id], :hittime => Time.new.hour)%>
-    <td><%= site.hits.to_i / (Time.new.now - site.created_at)%>
+    <td><%= site.hits.to_i / (Time.new - site.created_at)%>
   </tr>
   <tr>
     <th>Page</th>
