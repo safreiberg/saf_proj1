@@ -1,7 +1,33 @@
 Design Analysis:
 
-The key design challenges with this project were to 
+The key design challenges with this project were to:
+    1) Be able to model the Sites and Pages about which data would be collected.
+    2) Be able to control flow from different parts of the application, including access to restricted pages.
+    3) Be able to process and track page hits from remote locations.
 
+To facilitate the completion of these design challenges, a few key decisions were made. Firstly, the decision to enforce a "one-to-many" relationship from users:sites was made. This means that each site can only have one administrator, but a user can administer many sites. This was justified because it is unlikely that there will be more than one user that needs to have access to the summary information for a site (there's usually only one sysadmin), but at the same time that sysadmin may control several domains. This was contrary to the design option of using many access control lists (ACLs) that would control each site. The ACL implementation was thought to be unnecessarily complex for a simple analytics site that would not require the ACL level of sophistication.
+
+It was also decided that the geolocation lookups and date registrations would happen on the client machine. While this lookup could easily occur on the server, pushing the work to the client reduces the amount of request overhead that the server needs to process for each registered hit (hitting the remote geolookup service would cause significant overhead).
+
+The pageview table is kept separate from the other tables in both the views and the database, and does not have objects depending on it, because the pageview table has the potential to grow very large. Since it registers a row for every hit, the pageview table could quickly grow to an unmanageable size. This was accounted for by making it possible (and not catastrophic) to drop the pageview table without significant effects to the other features on the site (the design is modular here). Another design was considered where each Site had a page table and a pageview table associated, but this was determined to have too much overhead from the sheer number of tables created, and created a design that was not modular in the event of catastrophe.
+
+Finally, the decision was made to obscure the IP addresses of clients and limit the geolookup granularity in order to protect the identity and privacy of clients.
+
+
+Problem Analysis:
+
+Overview:
+
+The purpose of the system being built is to provide an analytics service for system administrators that is remote from each client site. This service will introduce minimal load onto the client machines and will track the number of pageviews to entire sites as well as pages within them, the location and time of each visit, and will provide an interface that is behind a password wall. For the client to interact with this service, the client will need to acquire a unique site_id tailored to them. This site_id will be provided by the analytics service and will be packaged with a javascript snipped that should be embedded on each page from the client site. This attached javascript snippet will notify the analytics service of any page views and will associate the page views with important information tied to the analytics service.
+
+Because the analytics service will be processing a large number of requests from client machines, the overhead on the server per request should be minimal. The analytics service is also in a nice position of not needing to be too concerned about security (it will never be handling large amounts of client information). The analytics will be summarized in aggregate form and thus will not have valuable information to attackers.
+
+The features that are provided for clients are:
+    1) The ability to password protect information
+    2) Analytics information including location, time of visit, and number of visits for sites and pages within sites.
+    3) The ability to keep multiple sites under the same account.
+
+Domain:
 
 Object Model:
 
@@ -57,3 +83,60 @@ For the server, the events are:
   - Receive hit notification. The server recieves a ping from a client, parses out the unique site identifier, path to the actual request (page), and the page visit duration from the request. The server then updates its database tables as necessary, creating listings for pages if they were not in existence already.
 
 Note that the JS on each client browser will include the page URL as a parameter to be processed by the SitesController, as well as the duration of the visit.
+
+
+Behavior: 
+
+The analytics service allows clients to observe the number of hits, location of hits, and time at which hits occurred for each site that a client manages. The next lines describe the location (URL) of each desired resource.
+
+/sites. This is the "home" location for a user. It shows the site information for each site that user manages.
+/sites/idnumber. This is the home location for a site. It shows site specific information for the site with id = idnumber. Only user with appropriate privilege level will be able to view this page.
+/signout. Signs out a user.
+/signin. Allows a user to sign in to the service.
+/signup. Allows a user to sign up for a service.
+/claimSite/idnumber. Allows a user to claim a site as their own. This will only be processed correctly if the site has not been claimed by anyone else. It may or may not have received ping requests prior to being claimed. This allows a client to start using the service but delay claiming their own page.
+
+The security concerns of this analytics service are minimal since many sites publish analytics freely. The only value of the aggregated data is for generalized advertising, but is not specific to any users or user groups, so the sensitivity of data is minimal. Possible attack vectors include DDOS through requests to register hits on client pages, as well as routing attacks through the URL or sql injection based attacks through the signin forms and the URL parsing. However, since none of the stored data is critical to a site's functionality and none of it is valuable to attackers, there is not a high perceived threat to this site.
+
+Wireframes are attached in a separate document.
+
+
+Appendix: 
+The client-side code that should be embedded in each client page. The only change is that my_id should be changed to an idnumber given by the analytics service to the client embedding the code.
+
+<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script type="text/javascript">
+      var time_start;
+      var my_id = xxxxxxxxxxx;
+      window.onload = function() {
+      time_start = new Date().getTime();
+      }
+
+      window.onunload = function() {
+      ping(new Date().getTime() - time_start);
+      }
+
+      function ping(difference) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 1) {
+          console.log("The call to open(...) succeeded.");
+        }
+        if (xhr.readyState == 2) {
+          console.log("The call to send(...) succeeded. Waiting for response...");
+        }
+        if (xhr.readyState == 3) {
+          console.log("The response is coming in!!");
+        }
+        if (xhr.readyState == 4) {
+          console.log("The call to open(...) succeeded.We now have the complete response: " + xhr.response);
+        }
+      }
+      
+      var url = window.location.pathname;
+
+      xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+my_id+"/"+url+"/"+difference/1000+"/" + new Date().getHours() + "/" + geoplugin_city(), false);
+      xhr.send("");
+      }
+    </script>      
