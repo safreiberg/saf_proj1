@@ -39,6 +39,7 @@ This summary page shows the total number of hits and the total amount of time th
 
 The Javascript snipped to be inserted to any client page is here:
 
+<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
 <script type="text/javascript">
       var time_start;
       var my_id = XXXXXXXXX;
@@ -68,7 +69,7 @@ The Javascript snipped to be inserted to any client page is here:
         	    }
             }
                var url = window.location.pathname;
-	       xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+my_id+"/"+url+"/"+difference/1000, false);
+	       xhr.open("GET", "http://fast-forest-5811.herokuapp.com/sites/"+my_id+"/"+url+"/"+difference/1000+"/" + new Date().getHours() + "/" + geoplugin_city(), false);
 	       xhr.send("");
       }
 </script>

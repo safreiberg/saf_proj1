@@ -1,3 +1,8 @@
+Design Analysis:
+
+The key design challenges with this project were to 
+
+
 Object Model:
 
 We need to be able to track the hits to each individual page within a site. The object model therefore looks like this:
