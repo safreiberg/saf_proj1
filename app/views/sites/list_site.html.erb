@@ -29,7 +29,7 @@
           site.total_duration.to_i / site.hits.to_i
         end
 %></td>
-    <td><%= Pageview.where(:site_id => params[:id], :hittime => Time.new.hour)%>
+    <td><%= Pageview.where(:site_id => params[:id], :hittime => Time.new.hour).count %>
     <td><%= site.hits.to_i / (Time.new - site.created_at)%>
   </tr>
   <tr>
