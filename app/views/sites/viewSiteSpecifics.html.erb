@@ -1,0 +1,21 @@
+<h1>Specifics for site <%= params[:id] %></h1>
+<table>
+
+  <tr>
+    <th>Local Hour</th>
+    <th>Location</th>
+    <th>Time</th>
+  </tr>
+
+  <%
+  pageviews = Pageview.where(:site_id => params[:id])
+  pageviews.each do |pageview|
+  %>
+  <tr>
+    <td><%= pageview.hittime %></td>
+    <td><%= pageview.location %></td>
+    <td><%= pageview.created_at %></td>
+
+    </tr>
+  <% end %>
+</table>

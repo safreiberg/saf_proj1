@@ -1,0 +1,1 @@
+<h1>Specifics for site <%= params[:id] %>

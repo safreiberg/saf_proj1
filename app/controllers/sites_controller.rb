@@ -1,9 +1,16 @@
 class SitesController < ApplicationController
-  before_filter :checkAuth, :only => [:createSite, :list_site, :list]
+  before_filter :checkAuth, :only => [:createSite, :list_site, :list, :viewSiteSpecifics]
+  after_filter :checkPermission, :only => [:list_site, :viewSiteSpecifics]
 
   def checkAuth
     if !session[:current_user]
       render :text => "You're not signed in! Go <a href='/signin'>here</a>."
+    end
+  end
+
+  def checkPermission
+    if @site.nil? or (@site.isopen == 0 and @site.ownedby != session[:current_user])
+      render :text => "Sorry bro, you don't have permission for this site."
     end
   end
 
@@ -24,6 +31,11 @@ class SitesController < ApplicationController
   end
 
   def sorry
+  end
+
+  def viewSiteSpecifics
+    @name = params[:id]
+    @site = Site.where(:name => @name).first_or_create({ :name => @name, :hits => 0, :total_duration => 0, :isopen => 0, :ownedby => "admin" })
   end
 
   ## Makes sure that a Site is in the database before trying to display the analytics statistics for it.
@@ -51,6 +63,12 @@ class SitesController < ApplicationController
       @page.increaseHitCount
       @page.increaseTotalDuration(@duration)
       @site.increaseTotalDuration(@duration)
+
+      if params[:location] and params[:hittime]
+        logger.debug "we got a location :)"
+        @pageview = Pageview.create({ :hittime => params[:hittime].to_i, :location => params[:location], :site_id => @name })
+      end
+
     end
   end
 

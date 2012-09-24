@@ -3,6 +3,7 @@
 <h2>Site, Pages: Hits</h2>
   <p>You are viewing this site if you are the owner or it is publicly listed.</p>
  <p>Hi, <%= session[:current_user] %>. Your sites are below:</p> <br />
+ <p>You can also view the location and time of requests for this site <%= link_to "here", {:controller => "sites", :action => "viewSiteSpecifics", :site_id => params[:id]} %>
 <table>
 
   <tr>
@@ -15,10 +16,6 @@
   <tr>
   <%
   site = Site.find_by_name(params[:id])
-  if site.nil? or (site.isopen == 0 and site.ownedby != session[:current_user])
-    render :text => "Sorry champ, looks like you don't have privileges for this page."
-    raise "Sorry bro, you don't have permission for this site."
-  end
   %>
     <td><%= site.name %></td>
     <td><%= site.hits %></td>
