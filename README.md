@@ -77,3 +77,8 @@ The Javascript snipped to be inserted to any client page is here:
 The client *must* change the variable "my_id" to the unique identifier given to them by system administrators running the web analytics server.
 
 I also just looked at this README in the browser and it looks disgusting. Sorry about that. The txt file by itself looks pretty nice. One final note is that there's a sample website using the javascript injected code at the root directory called: Test_Page.html.
+
+Features include:
+	- Login and logout
+	- geolocations for site visitors
+	- number of visitors by hour of the day (i.e., how many users sign on at 5pm vs the global average?)
